@@ -12,32 +12,24 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh '''
-                docker build -t node-docker-app:${BUILD_NUMBER} .
-                docker tag node-docker-app:${BUILD_NUMBER} sricharnitha13/node-docker-app:${BUILD_NUMBER}
+                bat '''
+                docker build -t node-docker-app:%BUILD_NUMBER% .
+                docker tag node-docker-app:%BUILD_NUMBER% sricharnitha13/node-docker-app:%BUILD_NUMBER%
                 '''
             }
         }
 
-       // stage('Push Docker Image') {
-         //   steps {
-           //     sh 'docker push sricharnitha13/node-docker-app:${BUILD_NUMBER}'
-            //}
-        //}
-        
         stage('Create container') {
             steps {
-                sh 'docker run -d -p 3000:8080 sricharnitha13/node-docker-app:${BUILD_NUMBER}'
+                bat 'docker run -d -p 3000:8080 sricharnitha13/node-docker-app:%BUILD_NUMBER%'
             }
         }
-
-
 
     }
 }
