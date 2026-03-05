@@ -20,14 +20,14 @@ pipeline {
             steps {
                 bat '''
                 docker build -t node-docker-app:%BUILD_NUMBER% .
-                docker tag node-docker-app:%BUILD_NUMBER% sricharnitha13/node-docker-app:%BUILD_NUMBER%
+                docker tag node-docker-app:%BUILD_NUMBER% sricharnitha/node-docker-app:%BUILD_NUMBER%
                 '''
             }
         }
 
         stage('Create container') {
             steps {
-                bat 'docker run -d -p 3000:8080 sricharnitha13/node-docker-app:%BUILD_NUMBER%'
+                bat 'docker run -d -p 3000:8080 sricharnitha/node-docker-app:%BUILD_NUMBER%'
             }
         }
 
