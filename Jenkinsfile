@@ -25,9 +25,16 @@ pipeline {
             }
         }
 
-        stage('Create container') {
+        stage('Stop Old Container') {
             steps {
-                bat 'docker run -d -p 3000:8080 sricharnitha/node-docker-app:%BUILD_NUMBER%'
+                bat 'docker stop node-container || exit 0'
+                bat 'docker rm node-container || exit 0'
+            }
+        }
+
+        stage('Create Container') {
+            steps {
+                bat 'docker run -d -p 3000:8080 --name node-container sricharnitha/node-docker-app:%BUILD_NUMBER%'
             }
         }
 
